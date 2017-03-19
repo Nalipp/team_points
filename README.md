@@ -21,6 +21,13 @@ JS Standard Linter
 
 Mocha Testing
 
+Chai Assertion
+
+Sprite sheets come from Mackenzie Child.
+I do no have rights to these images and only using them for practice.
+Support his design for developers course at
+https://mackenziechild.withcoach.com/design-for-developers
+
 This app uses ajax calls and bare node.js
 
 

@@ -37,4 +37,17 @@ describe('Repository', function () {
       })
     })
   })
+
+  describe('#AddTeamTwoMember', function () {
+    it('should add a new team one member', function (done) {
+      repo.addTeamTwoMember('sally', () => {
+        repo.loadTeams((data) => {
+          console.log('- after addTeamTwoMember:', data.toString())
+          expect(JSON.parse(data.toString())[1]).lengthOf(4)
+          expect(data.toString()).to.include('sally')
+          done()
+        })
+      })
+    })
+  })
 })
