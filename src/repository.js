@@ -12,7 +12,7 @@ class Repository {
     })
   }
 
-  addTeamOneMember(teamOneMember, callback) {
+  addTeamOneMember (teamOneMember, callback) {
     console.log('addTeamOneMember')
 
     fs.readFile(path.join(__dirname, 'team_members.dat'), (err, data) => {
@@ -21,7 +21,7 @@ class Repository {
       } else {
         let teamsArr = JSON.parse(data)
         teamsArr[0].push(teamOneMember)
-        console.log('added team one with new team member : ' + teamsArr[0] )
+        console.log('added team one with new team member : ' + teamsArr[0])
 
         fs.writeFile(path.join(__dirname, 'team_members.dat'), JSON.stringify(teamsArr), (err) => {
           if (err) {
@@ -34,7 +34,6 @@ class Repository {
       }
     })
   }
-
 }
 
 module.exports = Repository

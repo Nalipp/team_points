@@ -1,7 +1,7 @@
 $(document).ready(function () {
   loadTeams()
-  addEventListenersListOne();
-  addEventListenersListTwo();
+  addEventListenersListOne()
+  addEventListenersListTwo()
 })
 
 function loadTeams () {
@@ -11,7 +11,7 @@ function loadTeams () {
       let teamsArr = JSON.parse(data)
       $('#list1').empty()
       $('#list2').empty()
-      $("form").trigger("reset");
+      $('form').trigger('reset')
       for (let i = 0; i < teamsArr[0].length; i++) {
         $('#list1').append(
           '<li>' + teamsArr[0][i] + '</li>'
@@ -26,30 +26,30 @@ function loadTeams () {
 }
 
 function addEventListenersListOne () {
-  $('#btn-team1').click(function(){
+  $('#btn-team1').click(function () {
     let addName = $('input').val()
     console.log('addName :' + addName)
 
     $.get('http://localhost:4000/teams')
       .done(data => {
-      let teamsArr = JSON.parse(data)
+        let teamsArr = JSON.parse(data)
 
-    if (teamsArr[0].indexOf(addName) === -1) {
-      console.log('teamsArr[0] ' + teamsArr[0])
-      console.log('posting teamsArr[0] with new team member : ' + addName)
-      $.post('http://localhost:4000/team_one', addName)
+        if (teamsArr[0].indexOf(addName) === -1) {
+          console.log('teamsArr[0] ' + teamsArr[0])
+          console.log('posting teamsArr[0] with new team member : ' + addName)
+          $.post('http://localhost:4000/team_one', addName)
         .done(data => {
           loadTeams()
         })
-    } else {
-      window.alert('That team member is already on the list.')
-    }
-    })
-  });
+        } else {
+          window.alert('That team member is already on the list.')
+        }
+      })
+  })
 }
 
-function addEventListenersListTwo() {
-  $('#btn-team2').click(function(){
+function addEventListenersListTwo () {
+  $('#btn-team2').click(function () {
     let addName = $('input').val()
     let list2 = []
     list2.push(addName)

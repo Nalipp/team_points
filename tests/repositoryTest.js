@@ -37,5 +37,4 @@ describe('Repository', function () {
       })
     })
   })
-
 })

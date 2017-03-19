@@ -6,16 +6,16 @@
 ### This is a single page node.js app for managing students in a classroom setting.
 
 ## Comming soon
-###Input student names and return a random name from a team used for calling on random students or rewarding individuals on a winning team.
-###Spin slot machine to reward entire teams.
-###Timer with buzzer
+Input student names and return a random name from a team used for calling on random students or rewarding individuals on a winning team.
+Spin slot machine to reward entire teams.
+Timer with buzzer
 
-##Technical
-###Node.js
-###JQuery
-###JS Standard Linter
-###Mocha Testing
-###This app uses ajax calls and bare node.js
+## Technical
+Node.js
+JQuery
+JS Standard Linter
+Mocha Testing
+This app uses ajax calls and bare node.js
 
 
 ## How to run
