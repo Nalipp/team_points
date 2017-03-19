@@ -1,0 +1,24 @@
+{
+  "name": "SplitTeams",
+  "version": "0.0.1",
+  "description": "Interface for classroom management",
+  "main": "app.js",
+  "standard": {
+    "globals": [
+      "$"
+    ]
+  },
+  "scripts": {
+    "start": "node app",
+    "test": "standard --env mocha && mocha",
+    "dev": "nodemon app",
+    "lint": "standard --env mocha",
+    "lint-fix": "standard --env mocha --fix"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "mocha": "^3.2.0",
+    "nodemon": "^1.11.0",
+    "standard": "^9.0.1"
+  }
+}
