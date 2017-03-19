@@ -7,14 +7,20 @@
 
 ## Comming soon
 Input student names and return a random name from a team used for calling on random students or rewarding individuals on a winning team.
+
 Spin slot machine to reward entire teams.
+
 Timer with buzzer
 
 ## Technical
 Node.js
+
 JQuery
+
 JS Standard Linter
+
 Mocha Testing
+
 This app uses ajax calls and bare node.js
 
 
