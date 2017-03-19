@@ -35,7 +35,7 @@ function addEventListenersListOne () {
       .done(data => {
         let teamsArr = JSON.parse(data)
 
-        if (teamsArr[0].indexOf(addName) === -1) {
+        if (teamsArr[0].indexOf(addName) === -1 && addName.length > 0) {
           console.log('teamsArr[0] ' + teamsArr[0])
           console.log('posting teamsArr[0] with new team member : ' + addName)
           $.post('http://localhost:4000/team_one', addName)
@@ -43,7 +43,11 @@ function addEventListenersListOne () {
           loadTeams()
         })
         } else {
-          window.alert('That team member is already on the list.')
+          if (addName.length < 1) {
+            window.alert('name must not be blank')
+          } else {
+            window.alert('That team member is already on the list.')
+          }
         }
       })
   })
@@ -58,7 +62,7 @@ function addEventListenersListTwo () {
       .done(data => {
         let teamsArr = JSON.parse(data)
 
-        if (teamsArr[1].indexOf(addName) === -1) {
+        if (teamsArr[1].indexOf(addName) === -1 && addName.length > 0) {
           console.log('teamsArr[0] ' + teamsArr[1])
           console.log('posting teamsArr[0] with new team member : ' + addName)
           $.post('http://localhost:4000/team_two', addName)
@@ -66,7 +70,11 @@ function addEventListenersListTwo () {
           loadTeams()
         })
         } else {
-          window.alert('That team member is already on the list.')
+          if (addName.length < 1) {
+            window.alert('name must not be blank')
+          } else {
+            window.alert('That team member is already on the list.')
+          }
         }
       })
   })
