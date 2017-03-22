@@ -15,7 +15,8 @@ function loadTeams () {
       $('#addName').focus()
       for (let i = 0; i < teamsArr[0].length; i++) {
         $('#list1').append(
-          '<li>' + teamsArr[0][i] + '</li>'
+          '<li class="delete-x">' + teamsArr[0][i] + '</li>'
+          // let $btnTrash = $('.delete-x').attr('id', teamsArr[0][i]).click(deleteTeamOneMember)
         )
       }
       for (let i = 0; i < teamsArr[1].length; i++) {
@@ -78,4 +79,16 @@ function addEventListenersListTwo () {
         }
       })
   })
+
+  function deleteTeamOneMember(event) {
+    let id = event.target.id
+    console.log('id:', id)
+    $.ajax({
+      url: 'http://localhost:3000/team_one',
+      method: 'DELETE',
+      data: JSON.stringify([id])
+    }).done(data => {
+      loadTeams()
+    })
+  }
 }

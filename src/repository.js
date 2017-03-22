@@ -57,6 +57,34 @@ class Repository {
       }
     })
   }
+
+  deleteTeamOneMember (teamOneMemberToDelete, callback) {
+    console.log('delete team one member')
+
+    fs.readFile(path.join(__dirname, 'team_members.dat'), (err, data) => {
+      if (err) {
+        console.log('error reading file to delete team one member : ' + err)
+      } else {
+        let teamsArr = JSON.parse(data)
+        if (teamsArr[0].indexOf(teamOneMemberToDelete) !== -1) {
+          let deleteAtIndex = teamsArr[0].indexOf(teamOneMemberToDelete)
+          teamsArr[0].splice(deleteAtIndex, 1)
+        }
+        console.log('deleted team one member, remaining Arr : ' + teamsArr[0] )
+        let updatedArr = [teamsArr[0], teamsArr[1]]
+        console.log(updatedArr)
+
+        fs.writeFile(path.join(__dirname, 'team_members.dat'), JSON.stringify(updatedArr), (err) => {
+          if (err) {
+            console.log('error updating team')
+          } else {
+            console.log('team member deleted successfully')
+            if (callback) callback()
+          }
+        })
+      }
+    })
+  }
 }
 
 module.exports = Repository

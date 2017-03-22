@@ -25,7 +25,7 @@ describe('Repository', function () {
     })
   })
 
-  describe('#AddTeamOneMember', function () {
+  describe('#addTeamOneMember', function () {
     it('should add a new team one member', function (done) {
       repo.addTeamOneMember('billy', () => {
         repo.loadTeams((data) => {
@@ -38,13 +38,26 @@ describe('Repository', function () {
     })
   })
 
-  describe('#AddTeamTwoMember', function () {
+  describe('#addTeamTwoMember', function () {
     it('should add a new team one member', function (done) {
       repo.addTeamTwoMember('sally', () => {
         repo.loadTeams((data) => {
           console.log('- after addTeamTwoMember:', data.toString())
           expect(JSON.parse(data.toString())[1]).lengthOf(4)
           expect(data.toString()).to.include('sally')
+          done()
+        })
+      })
+    })
+  })
+
+  describe('#deleteTeamOneMember', function () {
+    it('should delete a team one member', function (done) {
+      repo.deleteTeamOneMember('nate', () => {
+        repo.loadTeams((data) => {
+          console.log('- after deleteTeamTwoMember:', data.toString())
+          expect(JSON.parse(data.toString())[0]).lengthOf(3)
+          expect(data.toString()[0]).not.to.include('sally')
           done()
         })
       })

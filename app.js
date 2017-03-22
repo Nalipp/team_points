@@ -24,6 +24,13 @@ var server = http.createServer(function (req, res) {
       repo.addTeamTwoMember(teamTwoMember)
       res.end(teamTwoMember)
     })
+  } else if (req.method === 'DELETE' && req.url === '/team_one') {
+    req.setEncoding('utf8')
+    req.on('data', (teamOneMember) => {
+      console.log('deleteData:', JSON.parse(teamOneMember))
+      repo.deleteTeamOneMember(JSON.parse(teamOneMember))
+      res.end(teamOneMember)
+    })
   } else {
     serveStatic(req.url, res)
   }

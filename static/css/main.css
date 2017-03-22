@@ -32,7 +32,7 @@ h2.points {
   padding-bottom: 100px;
 }
 ul {
-  padding: 16px 30px;
+  padding: 16px 10px;
   list-style: none;
   border-radius: 4px;
   background: #fff;
@@ -43,6 +43,20 @@ ul {
 }
 li {
   padding: 6px 0;
+}
+.delete-x::before {
+  display: inline-block;
+  color: red;
+  margin-right: 7px;
+  content: 'x';
+  font-size: 15px;
+  border: 2px solid grey;
+  width: 14px;
+  height: 7px;
+  border-radius: 100px;
+  vertical-align: 2px;
+  padding: 0 0px 14px 5px;
+  cursor: pointer;
 }
 form {
   margin-top: 80px;
