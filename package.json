@@ -10,7 +10,7 @@
   },
   "scripts": {
     "start": "node app",
-    "test": "standard --env mocha && mocha",
+    "test": "mocha tests/repositoryTest.js",
     "dev": "nodemon app",
     "lint": "standard --env mocha",
     "lint-fix": "standard --env mocha --fix"

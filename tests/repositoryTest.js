@@ -7,8 +7,49 @@ let repo
 describe('Repository', function () {
   before(function (done) {
     repo = new Repository()
-    let data = '[["nate", "julia", "hyeonu"],["billy","drake","heidi"]]'
-    fs.writeFile(path.join(__dirname, '../src/team_members.dat'), data, (err) => {
+    let data =
+    [
+      [
+        {
+          _id: 1,
+          teamNumber: 1,
+          name: 'julia',
+          inactive: false,
+          points: 0,
+        },
+        {
+          _id: 2,
+          teamNumber: 1,
+          name: 'nate',
+          inactive: false,
+          points: 0,
+        },
+        {
+          _id: 3,
+          teamNumber: 1,
+          name: 'hyeonu',
+          inactive: false,
+          points: 0,
+        },
+      ],
+      [
+        {
+          _id: 4,
+          teamNumber: 2,
+          name: 'bill',
+          inactive: false,
+          points: 0,
+        },
+        {
+          _id: 5,
+          teamNumber: 2,
+          name: 'tom',
+          inactive: false,
+          points: 0,
+        }
+      ]
+    ]
+    fs.writeFile(path.join(__dirname, '../src/team_members.dat'), JSON.stringify(data), (err) => {
       if (err) console.log('unable to write teames: ' + err)
       console.log('teams have been successfully created')
       done()
@@ -18,8 +59,8 @@ describe('Repository', function () {
   describe('#loadTeams', function () {
     it('should find all the team members', function (done) {
       repo.loadTeams((data) => {
-        console.log('- after loadTeams:', data.toString())
-        expect(JSON.parse(data.toString())).have.length.at.least(2)
+        console.log('- after loadTeams:', data)
+        expect(data).have.length.at.least(2)
         done()
       })
     })
@@ -27,11 +68,12 @@ describe('Repository', function () {
 
   describe('#addTeamOneMember', function () {
     it('should add a new team one member', function (done) {
-      repo.addTeamOneMember('billy', () => {
+      repo.addTeamOneMember('chris', () => {
         repo.loadTeams((data) => {
-          console.log('- after addTeamOneMember:', data.toString())
-          expect(JSON.parse(data.toString())[0]).lengthOf(4)
-          expect(data.toString()).to.include('billy')
+          console.log('- after addTeamOneMember:', data)
+          expect(data).have.length.at.least(3)
+          console.log('this is the data ' + data)
+          expect(data.toString()).to.include('chris')
           done()
         })
       })
@@ -39,11 +81,12 @@ describe('Repository', function () {
   })
 
   describe('#addTeamTwoMember', function () {
-    it('should add a new team one member', function (done) {
+    it('should add a new team two member', function (done) {
       repo.addTeamTwoMember('sally', () => {
         repo.loadTeams((data) => {
-          console.log('- after addTeamTwoMember:', data.toString())
-          expect(JSON.parse(data.toString())[1]).lengthOf(4)
+          console.log('- after addTeamTwoMember:', data)
+          expect(data).have.length.at.least(3)
+          console.log('this is the data ' + data)
           expect(data.toString()).to.include('sally')
           done()
         })
@@ -51,13 +94,12 @@ describe('Repository', function () {
     })
   })
 
-  describe('#deleteTeamOneMember', function () {
-    it('should delete a team one member', function (done) {
-      repo.deleteTeamOneMember('nate', () => {
+  describe('#deleteTeamMember', function () {
+    it('should add a new team two member', function (done) {
+      repo.deleteTeamMember(3, () => {
         repo.loadTeams((data) => {
-          console.log('- after deleteTeamTwoMember:', data.toString())
-          expect(JSON.parse(data.toString())[0]).lengthOf(3)
-          expect(data.toString()[0]).not.to.include('sally')
+          console.log('- after deleteTeamMember:', data)
+          expect(data.toString()).not.to.include(3)
           done()
         })
       })

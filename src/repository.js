@@ -12,16 +12,30 @@ class Repository {
     })
   }
 
-  addTeamOneMember (teamOneMember, callback) {
-    console.log('addTeamOneMember')
+  addTeamOneMember (name, callback) {
+    console.log('addteamOneMember')
 
     fs.readFile(path.join(__dirname, 'team_members.dat'), (err, data) => {
       if (err) {
         console.log('error adding team one member : ' + err)
       } else {
         let teamsArr = JSON.parse(data)
-        teamsArr[0].push(teamOneMember)
-        console.log('added team one with new team member : ' + teamsArr[0])
+        let allIds = []
+        for (var i = 0; i < teamsArr[0].length; i++) {
+          console.log(teamsArr[0][i]._id)
+          allIds.push(teamsArr[0][i]._id)
+        }
+        var maxId = allIds.reduce(function(a, b) {
+          return Math.max(a, b);
+        });
+        let newTeamMember = {
+          _id: maxId + 1,
+          teamNumber: 1,
+          name: name,
+          inactive: false,
+          points: 0,
+        }
+        teamsArr[0].push(newTeamMember)
 
         fs.writeFile(path.join(__dirname, 'team_members.dat'), JSON.stringify(teamsArr), (err) => {
           if (err) {
@@ -35,7 +49,7 @@ class Repository {
     })
   }
 
-  addTeamTwoMember (teamTwoMember, callback) {
+  addTeamTwoMember (name, callback) {
     console.log('addTeamTwoMember')
 
     fs.readFile(path.join(__dirname, 'team_members.dat'), (err, data) => {
@@ -43,8 +57,22 @@ class Repository {
         console.log('error adding team one member : ' + err)
       } else {
         let teamsArr = JSON.parse(data)
-        teamsArr[1].push(teamTwoMember)
-        console.log('added team one with new team member : ' + teamsArr[1])
+        let allIds = []
+        for (var i = 0; i < teamsArr[1].length; i++) {
+          console.log(teamsArr[1][i]._id)
+          allIds.push(teamsArr[1][i]._id)
+        }
+        var maxId = allIds.reduce(function(a, b) {
+          return Math.max(a, b);
+        });
+        let newTeamMember = {
+          _id: maxId + 1,
+          teamNumber: 1,
+          name: name,
+          inactive: false,
+          points: 0,
+        }
+        teamsArr[1].push(newTeamMember)
 
         fs.writeFile(path.join(__dirname, 'team_members.dat'), JSON.stringify(teamsArr), (err) => {
           if (err) {
@@ -58,21 +86,22 @@ class Repository {
     })
   }
 
-  deleteTeamOneMember (teamOneMemberToDelete, callback) {
-    console.log('delete team one member')
+  deleteTeamMember (id, callback) {
+    console.log('delete team one member id ' + id)
 
     fs.readFile(path.join(__dirname, 'team_members.dat'), (err, data) => {
       if (err) {
         console.log('error reading file to delete team one member : ' + err)
       } else {
         let teamsArr = JSON.parse(data)
-        if (teamsArr[0].indexOf(teamOneMemberToDelete) !== -1) {
-          let deleteAtIndex = teamsArr[0].indexOf(teamOneMemberToDelete)
-          teamsArr[0].splice(deleteAtIndex, 1)
+        console.log('this is the teamsArr ' + teamsArr)
+        for (let i = 0; i < teamsArr.length; i++) {
+          teamsArr[i] = teamsArr[i].filter((teamMember) => {
+            return teamMember._id !== Number(id)
+          })
         }
-        console.log('deleted team one member, remaining Arr : ' + teamsArr[0] )
+        console.log('It\'s not me!!! ')
         let updatedArr = [teamsArr[0], teamsArr[1]]
-        console.log(updatedArr)
 
         fs.writeFile(path.join(__dirname, 'team_members.dat'), JSON.stringify(updatedArr), (err) => {
           if (err) {

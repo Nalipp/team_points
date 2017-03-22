@@ -14,17 +14,28 @@ function loadTeams () {
       $('form').trigger('reset')
       $('#addName').focus()
       for (let i = 0; i < teamsArr[0].length; i++) {
-        $('#list1').append(
-          '<li class="delete-x">' + teamsArr[0][i] + '</li>'
-          // let $btnTrash = $('.delete-x').attr('id', teamsArr[0][i]).click(deleteTeamOneMember)
-        )
+        let $teamMember = $('#list1').append('<li>' + teamsArr[0][i].name + '</li>')
+        let $btnTrash = $('<span class="delete-x">').attr('id', teamsArr[0][i]._id).click(deleteTeamMember)
+        $teamMember.append($btnTrash)
       }
       for (let i = 0; i < teamsArr[1].length; i++) {
-        $('#list2').append(
-          '<li>' + teamsArr[1][i] + '</li>'
-        )
+        let $teamMember = $('#list2').append('<li>' + teamsArr[1][i].name + '</li>')
+        let $btnTrash = $('<span class="delete-x">').attr('id', teamsArr[1][i]._id).click(deleteTeamMember)
+        $teamMember.append($btnTrash)
       }
     })
+}
+
+function deleteTeamMember (event) {
+  let id = event.target.id
+  console.log('preparing to delete id:', id)
+  $.ajax({
+    url: 'http://localhost:4000/teams',
+    method: 'DELETE',
+    data: JSON.stringify(id)
+  }).done(data => {
+    loadTeams()
+  })
 }
 
 function addEventListenersListOne () {
@@ -80,15 +91,16 @@ function addEventListenersListTwo () {
       })
   })
 
-  function deleteTeamOneMember(event) {
-    let id = event.target.id
-    console.log('id:', id)
-    $.ajax({
-      url: 'http://localhost:3000/team_one',
-      method: 'DELETE',
-      data: JSON.stringify([id])
-    }).done(data => {
-      loadTeams()
-    })
-  }
+  // function deleteTeamOneMember(event) {
+  //   window.alert('hi')
+  //   let id = event.target.id
+  //   console.log('id:', id)
+  //   $.ajax({
+  //     url: 'http://localhost:4000/team_one',
+  //     method: 'DELETE',
+  //     data: JSON.stringify([id])
+  //   }).done(data => {
+  //     loadTeams()
+  //   })
+  // }
 }
