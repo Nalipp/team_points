@@ -1,5 +1,5 @@
 {
-  "name": "SplitTeams",
+  "name": "split_teams",
   "version": "0.0.1",
   "description": "Interface for classroom management",
   "main": "app.js",
@@ -20,5 +20,22 @@
     "mocha": "^3.2.0",
     "nodemon": "^1.11.0",
     "standard": "^9.0.1"
-  }
+  },
+  "directories": {
+    "test": "tests"
+  },
+  "dependencies": {
+    "mongodb": "^2.2.25",
+    "semistandard": "^10.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Nalipp/team_points.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Nalipp/team_points/issues"
+  },
+  "homepage": "https://github.com/Nalipp/team_points#readme"
 }

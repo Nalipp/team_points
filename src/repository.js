@@ -1,117 +1,49 @@
-const fs = require('fs')
-const path = require('path')
+const MongoClient = require('mongodb').MongoClient
+const ObjectID = require('mongodb').ObjectID
+const url = 'mongodb://localhost:27017/test_split_teams'
 
 class Repository {
   loadTeams (callback) {
-    fs.readFile(path.join(__dirname, 'team_members.dat'), (err, data) => {
-      if (err) {
-        console.log('unable to loadTeamMembers ' + err)
-      } else {
-        callback(data)
-      }
+    console.log('loadStudents')
+    MongoClient.connect(url, (err, db) => {
+      if (err) return console.error('Failed to connect.', err)
+      db.collection('students').find({}).toArray((err, students) => {
+        if (err) return console.error('Failed to load students.', err)
+        callback(students)
+      })
     })
   }
 
   addTeamOneMember (name, callback) {
-    console.log('addteamOneMember')
-
-    fs.readFile(path.join(__dirname, 'team_members.dat'), (err, data) => {
-      if (err) {
-        console.log('error adding team one member : ' + err)
-      } else {
-        let teamsArr = JSON.parse(data)
-        let allIds = []
-        for (var i = 0; i < teamsArr[0].length; i++) {
-          console.log(teamsArr[0][i]._id)
-          allIds.push(teamsArr[0][i]._id)
-        }
-        var maxId = allIds.reduce(function(a, b) {
-          return Math.max(a, b);
-        });
-        let newTeamMember = {
-          _id: maxId + 1,
-          teamNumber: 1,
-          name: name,
-          inactive: false,
-          points: 0,
-        }
-        teamsArr[0].push(newTeamMember)
-
-        fs.writeFile(path.join(__dirname, 'team_members.dat'), JSON.stringify(teamsArr), (err) => {
-          if (err) {
-            console.log('error updating team')
-          } else {
-            console.log('new team member added successfully')
-            if (callback) callback()
-          }
-        })
-      }
+    console.log('addTeamOneMember')
+    MongoClient.connect(url, (err, db) => {
+      if (err) return console.error('Failed to connect.', err)
+      db.collection('students').insertOne(name, (err, result) => {
+        if (err) return console.error('Failed to add team one member.', err)
+        callback(result.ops[0]._id)
+      })
     })
   }
 
   addTeamTwoMember (name, callback) {
     console.log('addTeamTwoMember')
-
-    fs.readFile(path.join(__dirname, 'team_members.dat'), (err, data) => {
-      if (err) {
-        console.log('error adding team one member : ' + err)
-      } else {
-        let teamsArr = JSON.parse(data)
-        let allIds = []
-        for (var i = 0; i < teamsArr[1].length; i++) {
-          console.log(teamsArr[1][i]._id)
-          allIds.push(teamsArr[1][i]._id)
-        }
-        var maxId = allIds.reduce(function(a, b) {
-          return Math.max(a, b);
-        });
-        let newTeamMember = {
-          _id: maxId + 1,
-          teamNumber: 1,
-          name: name,
-          inactive: false,
-          points: 0,
-        }
-        teamsArr[1].push(newTeamMember)
-
-        fs.writeFile(path.join(__dirname, 'team_members.dat'), JSON.stringify(teamsArr), (err) => {
-          if (err) {
-            console.log('error updating team')
-          } else {
-            console.log('new team member added successfully')
-            if (callback) callback()
-          }
-        })
-      }
+    MongoClient.connect(url, (err, db) => {
+      if (err) return console.error('Failed to connect.', err)
+      db.collection('students').insertOne(name, (err, students) => {
+        if (err) return console.error('Failed to add team one member.', err)
+        callback(students)
+      })
     })
   }
 
   deleteTeamMember (id, callback) {
-    console.log('delete team one member id ' + id)
-
-    fs.readFile(path.join(__dirname, 'team_members.dat'), (err, data) => {
-      if (err) {
-        console.log('error reading file to delete team one member : ' + err)
-      } else {
-        let teamsArr = JSON.parse(data)
-        console.log('this is the teamsArr ' + teamsArr)
-        for (let i = 0; i < teamsArr.length; i++) {
-          teamsArr[i] = teamsArr[i].filter((teamMember) => {
-            return teamMember._id !== Number(id)
-          })
-        }
-        console.log('It\'s not me!!! ')
-        let updatedArr = [teamsArr[0], teamsArr[1]]
-
-        fs.writeFile(path.join(__dirname, 'team_members.dat'), JSON.stringify(updatedArr), (err) => {
-          if (err) {
-            console.log('error updating team')
-          } else {
-            console.log('team member deleted successfully')
-            if (callback) callback()
-          }
-        })
-      }
+    console.log('deleteTeamMember')
+    MongoClient.connect(url, (err, db) => {
+      if (err) return console.error('Failed to connect.', err)
+      db.collection('students').deleteOne({_id: new ObjectID(id)}, (err, students) => {
+        if (err) return console.error('Failed to delete team member.', err)
+        callback()
+      })
     })
   }
 }
